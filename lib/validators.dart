@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:vin_decoder/vin_decoder.dart';
+
 import 'src/helpers.dart';
 
 RegExp _email = new RegExp(
@@ -513,12 +513,15 @@ bool isMongoId(String str) {
   return (isHexadecimal(str) && str.length == 24);
 }
 
+/*
+/// NB! this method is commented-out to remove dependency on vin_encoder
 /// check if the string is a valid ISO 3779-compliant Vehicle identification
 /// number (VIN)
 bool isVIN(String str) {
   VIN vin = VIN(number: str);
   return vin.valid();
 }
+*/
 
 var _threeDigit = RegExp(r'^\d{3}$');
 var _fourDigit = RegExp(r'^\d{4}$');
@@ -581,5 +584,7 @@ bool isPostalCode(String? text, String locale, {bool orElse()?}) {
   final pattern = _postalCodePatterns[locale];
   return pattern != null
       ? pattern.hasMatch(text!)
-      : orElse != null ? orElse() : throw FormatException();
+      : orElse != null
+          ? orElse()
+          : throw FormatException();
 }
